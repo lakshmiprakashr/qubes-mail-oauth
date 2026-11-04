@@ -270,13 +270,13 @@
     <section aria-labelledby="summary-title">
       <h2 id="summary-title">Summary</h2>
       <div class="summary">
-        <p>Qubes Mail connects directly to Gmail, stores your mail and OAuth tokens on your own computer, and does not send your email to a developer-operated server. We do not sell Google user data, use it for advertising, or share it with data brokers.</p>
+        <p>Qubes Mail connects directly to Gmail, stores your mail and OAuth tokens on your own computer, and does not send your email to a Qubes Mail-operated server. Optional AI processing, if enabled, runs on equipment you control. We do not sell Google user data, use it for advertising, or share it with data brokers.</p>
       </div>
     </section>
 
     <section aria-labelledby="data-title">
       <h2 id="data-title">Information accessed from Google</h2>
-      <!-- OPERATOR REVIEW REQUIRED: Confirm the OAuth client actually requests https://mail.google.com/ (full Gmail scope). If a narrower or different scope is used, update this section before publishing. -->
+      <!-- Source evidence: mutt_oauth2.py (version 2020-08-07) defaults to https://mail.google.com/, and the repository's authorization commands pass no --scope override. OPERATOR REVIEW REQUIRED: Confirm the live OAuth client requests this scope before publishing; if it differs, update this section and index.html. -->
       <p>When you authorize Qubes Mail with your Google Account, Google provides the app with:</p>
       <ul>
         <li>the email address associated with the account;</li>
@@ -302,14 +302,14 @@
         <li>display, search, and organize your local mail;</li>
         <li>send messages you explicitly compose.</li>
       </ul>
-      <p>We do not use Google user data for advertising, profiling, or eligibility decisions. We do not sell it.</p>
-      <!-- OPERATOR REVIEW REQUIRED: Confirm whether any optional local analysis or AI feature processes Google user data. If it does, describe it here and confirm that no data is sent to an external service without disclosure. -->
-      <p>If optional mail-analysis features are enabled, they are designed to run on equipment you control. This policy will be updated before any Google user data is sent to a third-party service.</p>
+      <p>We do not use Google user data for advertising, advertising-related profiling, or eligibility decisions such as creditworthiness or lending. We do not sell it.</p>
+      <!-- Source evidence: the optional AI path uses a local Ollama service reached through Qubes OS qrexec isolation; no external AI API was found. OPERATOR REVIEW REQUIRED: Confirm the shipped feature set and endpoint before publishing. -->
+      <p>If optional mail-analysis or AI features are enabled, the message content needed for the requested analysis is processed by a local model service on equipment you control. Qubes Mail does not send Google user data to an external AI service. The developer does not receive that content.</p>
     </section>
 
     <section aria-labelledby="storage-title">
       <h2 id="storage-title">Local storage and retention</h2>
-      <!-- OPERATOR REVIEW REQUIRED: Confirm the shipped configuration encrypts OAuth tokens at rest and does not persist plaintext tokens. -->
+      <!-- Source evidence: OAuth tokens are encrypted with split-GPG, and plaintext token persistence was not found. OPERATOR REVIEW REQUIRED: Confirm the deployed token store before publishing. -->
       <p>Synced mail, attachments, the local search index, and application settings are stored on your Qubes OS computer. OAuth access and refresh tokens are also stored there, encrypted at rest. Access tokens are short-lived and refreshed by the app as needed.</p>
       <p>Qubes Mail does not operate a server that stores your mail or tokens. The developer does not receive a copy of your email through the app.</p>
       <p>Data remains on your device until you delete it. Your Gmail account keeps its own copy of your mail under Google's terms and privacy policy. If you configure backups, copies may be created according to your backup settings; those copies are under your control.</p>
@@ -317,7 +317,7 @@
 
     <section aria-labelledby="sharing-title">
       <h2 id="sharing-title">Sharing and disclosure</h2>
-      <p>We do not sell, rent, trade, or share Google user data with third parties. The app exchanges data with Google only as needed to authenticate and provide email service.</p>
+      <p>We do not sell, rent, trade, or share Google user data with third parties. The app exchanges data with Google as needed to authenticate and provide email service. Optional AI processing stays on equipment you control and is not a third-party disclosure.</p>
       <p>We do not allow humans to read your Google user data unless you explicitly agree that we may review specific data for support, the review is necessary for security purposes, or disclosure is required by law.</p>
       <p>This website is hosted by GitHub Pages. GitHub may process standard web request information, such as an IP address, browser type, and requested URL, in accordance with GitHub's privacy statement. The website itself does not add any tracking.</p>
     </section>

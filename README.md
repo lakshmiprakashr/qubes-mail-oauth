@@ -274,10 +274,14 @@ application before publication:
 
 1. The OAuth client requests `https://mail.google.com/`.
 2. OAuth tokens are encrypted at rest and plaintext tokens are not persisted.
-3. No developer-operated server receives or stores mail or tokens.
+3. No Qubes Mail-operated server receives or stores mail or tokens.
 4. Optional analysis features run on equipment controlled by the user and do
    not send Google user data to a third party.
 5. The folder defaults are Inbox, Sent, Drafts, and Trash.
+
+Repository evidence supports items 1, 2, 4, and 5. Item 3 is supported by the
+local-only architecture. The live OAuth client configuration, deployed token
+store, and optional AI endpoint still require operator confirmation.
 
 If any claim is inaccurate, update both pages and this README.
 

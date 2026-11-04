@@ -297,7 +297,7 @@
     <section class="hero" aria-labelledby="hero-title">
       <p class="eyebrow">Private application</p>
       <h1 id="hero-title">Local-first email for Qubes OS.</h1>
-      <p class="lead">Qubes Mail is a personal email application for Qubes OS. It connects directly to Gmail using OAuth 2.0, keeps a local copy of the folders you choose, and processes your mail on your own computer. There is no Qubes Mail account, cloud service, or developer-operated server in the middle.</p>
+      <p class="lead">Qubes Mail is a personal email application for Qubes OS. It connects directly to Gmail using OAuth 2.0, keeps a local copy of the folders you choose, and processes your mail locally in your own environment. There is no Qubes Mail account, cloud service, or Qubes Mail-operated server in the middle.</p>
       <p class="actions">
         <a class="button" href="#how-it-works">How it works</a>
         <a class="button secondary" href="privacy.html">Read the privacy policy</a>
@@ -317,7 +317,7 @@
         </article>
         <article class="card">
           <h3>Works locally</h3>
-          <p>Indexes and searches mail on your computer. No developer-operated server receives your messages.</p>
+          <p>Indexes and searches mail on your computer. Optional AI features use a local service on equipment you control; no Qubes Mail-operated server receives your messages.</p>
         </article>
         <article class="card">
           <h3>Protects credentials</h3>
@@ -328,7 +328,7 @@
 
     <section aria-labelledby="access-title">
       <h2 id="access-title">What it accesses</h2>
-      <!-- OPERATOR REVIEW REQUIRED: Confirm the shipped OAuth client requests https://mail.google.com/ (full Gmail scope). If the scope differs, update this section and privacy.html before publishing. -->
+      <!-- Source evidence: mutt_oauth2.py (version 2020-08-07) defaults to https://mail.google.com/, and the repository's authorization commands pass no --scope override. OPERATOR REVIEW REQUIRED: Confirm the live OAuth client requests this scope before publishing; if it differs, update this section and privacy.html. -->
       <p>To provide these features, Qubes Mail asks Google for permission to access your Gmail account. The current design uses Google's full Gmail access scope (<code>https://mail.google.com/</code>) because IMAP and SMTP authentication with OAuth require it. Google describes that scope as permission to read, compose, send, and permanently delete email.</p>
       <ul>
         <li>The email address associated with the Gmail account.</li>
@@ -342,9 +342,9 @@
       <h2 id="privacy-title">Private by design</h2>
       <ul>
         <li>No analytics, advertising, tracking pixels, or data brokers.</li>
-        <li>No Qubes Mail account and no developer-operated cloud service.</li>
+        <li>No Qubes Mail account and no Qubes Mail-operated cloud service.</li>
         <li>OAuth tokens are encrypted at rest, and access tokens are short-lived.</li>
-        <li>We do not sell, rent, or share Google user data with third parties. Data is exchanged only with Google as needed to provide email service.</li>
+        <li>We do not sell, rent, or share Google user data with third parties. Data is exchanged with Google as needed to provide email service; optional AI processing stays on equipment you control.</li>
         <li>This website uses no cookies, analytics, or JavaScript.</li>
       </ul>
       <p class="note">Qubes Mail is a private application, not a public email service or commercial product. These pages document the application and its privacy practices for Google OAuth review.</p>
