@@ -1,0 +1,24 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.vscode/
+.idea/
+
+# Local tooling and generated output
+node_modules/
+_site/
+.cache/
+*.log
+
+# Secrets and credentials (never commit)
+.env
+.env.*
+*.key
+*.pem
+*.token
+client_secret*.json
+oauth-tokens/
+credentials/
+secrets/

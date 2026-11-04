@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+  <title>Qubes Mail - Private, local-first email for Qubes OS</title>
+  <meta name="description" content="Qubes Mail is a private, local-first email application for Qubes OS that connects directly to Gmail using OAuth 2.0.">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f8fa;
+      --surface: #ffffff;
+      --text: #17212b;
+      --muted: #55606d;
+      --line: #dce3ea;
+      --accent: #0b6b5e;
+      --accent-dark: #084f45;
+      --soft: #edf6f4;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    a {
+      color: var(--accent-dark);
+      text-underline-offset: 0.18em;
+    }
+
+    a:hover {
+      text-decoration-thickness: 2px;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 10;
+      padding: 0.75rem 1rem;
+      background: var(--surface);
+      color: var(--accent-dark);
+    }
+
+    .skip-link:focus {
+      left: 1rem;
+      top: 1rem;
+    }
+
+    .site-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .wrap {
+      width: min(100% - 2.5rem, 860px);
+      margin-inline: auto;
+    }
+
+    .header-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: 1rem;
+    }
+
+    .brand {
+      color: var(--text);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+
+    .brand:hover {
+      color: var(--accent-dark);
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    nav a {
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    nav a:hover,
+    nav a[aria-current="page"] {
+      color: var(--accent-dark);
+    }
+
+    main {
+      padding-block: 3rem 4rem;
+    }
+
+    .hero {
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      margin: 0 0 0.75rem;
+      color: var(--accent-dark);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      margin: 2.5rem 0 0.75rem;
+      font-size: clamp(1.35rem, 3vw, 1.7rem);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      margin: 0 0 0.4rem;
+      font-size: 1.05rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    .lead {
+      max-width: 65ch;
+      color: var(--muted);
+      font-size: 1.15rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 0.7rem 1.1rem;
+      border: 1px solid var(--accent);
+      border-radius: 0.45rem;
+      background: var(--accent);
+      color: #ffffff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      border-color: var(--accent-dark);
+      background: var(--accent-dark);
+    }
+
+    .button.secondary {
+      border-color: var(--line);
+      background: transparent;
+      color: var(--accent-dark);
+    }
+
+    .button.secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent-dark);
+    }
+
+    .grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-block: 1.25rem 1rem;
+    }
+
+    .card {
+      padding: 1.1rem;
+      border: 1px solid var(--line);
+      border-radius: 0.6rem;
+      background: var(--surface);
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.97rem;
+    }
+
+    ul {
+      padding-left: 1.25rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    code {
+      overflow-wrap: anywhere;
+      font-size: 0.92em;
+    }
+
+    .note {
+      padding: 0.9rem 1rem;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 0.4rem 0.4rem 0;
+      background: var(--soft);
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-inner {
+      display: grid;
+      gap: 0.5rem;
+      padding-block: 1.5rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+    }
+
+    @media (max-width: 560px) {
+      body {
+        font-size: 16px;
+      }
+
+      main {
+        padding-block: 2rem 3rem;
+      }
+
+      .header-inner {
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="./" aria-label="Qubes Mail home">Qubes Mail</a>
+      <nav aria-label="Primary">
+        <a href="./" aria-current="page">Home</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">Private application</p>
+      <h1 id="hero-title">Local-first email for Qubes OS.</h1>
+      <p class="lead">Qubes Mail is a personal email application for Qubes OS. It connects directly to Gmail using OAuth 2.0, keeps a local copy of the folders you choose, and processes your mail on your own computer. There is no Qubes Mail account, cloud service, or developer-operated server in the middle.</p>
+      <p class="actions">
+        <a class="button" href="#how-it-works">How it works</a>
+        <a class="button secondary" href="privacy.html">Read the privacy policy</a>
+      </p>
+    </section>
+
+    <section id="how-it-works" aria-labelledby="how-title">
+      <h2 id="how-title">How it works</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Syncs selected folders</h3>
+          <p>Connects over IMAP using OAuth 2.0 and keeps local copies of Inbox, Sent, Drafts, and Trash.</p>
+        </article>
+        <article class="card">
+          <h3>Sends through Gmail</h3>
+          <p>Composes and sends messages through Gmail's SMTP service only when you choose to send.</p>
+        </article>
+        <article class="card">
+          <h3>Works locally</h3>
+          <p>Indexes and searches mail on your computer. No developer-operated server receives your messages.</p>
+        </article>
+        <article class="card">
+          <h3>Protects credentials</h3>
+          <p>Stores OAuth tokens encrypted on your device and requests short-lived access tokens only when needed.</p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="access-title">
+      <h2 id="access-title">What it accesses</h2>
+      <!-- OPERATOR REVIEW REQUIRED: Confirm the shipped OAuth client requests https://mail.google.com/ (full Gmail scope). If the scope differs, update this section and privacy.html before publishing. -->
+      <p>To provide these features, Qubes Mail asks Google for permission to access your Gmail account. The current design uses Google's full Gmail access scope (<code>https://mail.google.com/</code>) because IMAP and SMTP authentication with OAuth require it. Google describes that scope as permission to read, compose, send, and permanently delete email.</p>
+      <ul>
+        <li>The email address associated with the Gmail account.</li>
+        <li>Messages and attachments in the folders you choose to sync.</li>
+        <li>Permission to send messages you compose.</li>
+      </ul>
+      <p>Qubes Mail does not request Google Drive, Google Calendar, Google Contacts, or other Google services.</p>
+    </section>
+
+    <section aria-labelledby="privacy-title">
+      <h2 id="privacy-title">Private by design</h2>
+      <ul>
+        <li>No analytics, advertising, tracking pixels, or data brokers.</li>
+        <li>No Qubes Mail account and no developer-operated cloud service.</li>
+        <li>OAuth tokens are encrypted at rest, and access tokens are short-lived.</li>
+        <li>We do not sell, rent, or share Google user data with third parties. Data is exchanged only with Google as needed to provide email service.</li>
+        <li>This website uses no cookies, analytics, or JavaScript.</li>
+      </ul>
+      <p class="note">Qubes Mail is a private application, not a public email service or commercial product. These pages document the application and its privacy practices for Google OAuth review.</p>
+    </section>
+
+    <section aria-labelledby="contact-title">
+      <h2 id="contact-title">Contact</h2>
+      <p>Questions about Qubes Mail or its privacy practices can be sent to the maintainer through <a href="https://github.com/lakshmiprakashr">GitHub</a>. Please do not send email contents, passwords, OAuth tokens, or other sensitive information.</p>
+      <p>Read the full <a href="privacy.html">privacy policy</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <p>Qubes Mail is an independent project and is not affiliated with Google LLC. Gmail is a trademark of Google LLC.</p>
+      <div class="footer-links">
+        <a href="./">Home</a>
+        <a href="privacy.html">Privacy policy</a>
+        <span>Last updated: November 3, 2026</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
