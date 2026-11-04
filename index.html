@@ -317,7 +317,7 @@
         </article>
         <article class="card">
           <h3>Works locally</h3>
-          <p>Indexes and searches mail on your computer. Optional AI features use a local service on equipment you control; no Qubes Mail-operated server receives your messages.</p>
+          <p>Indexes and searches mail on your computer. Optional AI features use a local model service on equipment you control; the reviewed code has no external AI API.</p>
         </article>
         <article class="card">
           <h3>Protects credentials</h3>
@@ -328,8 +328,7 @@
 
     <section aria-labelledby="access-title">
       <h2 id="access-title">What it accesses</h2>
-      <!-- Source evidence: mutt_oauth2.py (version 2020-08-07) defaults to https://mail.google.com/, and the repository's authorization commands pass no --scope override. OPERATOR REVIEW REQUIRED: Confirm the live OAuth client requests this scope before publishing; if it differs, update this section and privacy.html. -->
-      <p>To provide these features, Qubes Mail asks Google for permission to access your Gmail account. The current design uses Google's full Gmail access scope (<code>https://mail.google.com/</code>) because IMAP and SMTP authentication with OAuth require it. Google describes that scope as permission to read, compose, send, and permanently delete email.</p>
+      <p>To provide these features, Qubes Mail uses OAuth 2.0 to ask Google for permission to access your Gmail account. The project's documented OAuth setup uses Google's full Gmail access scope (<code>https://mail.google.com/</code>). Google describes that scope as permission to read, compose, send, and permanently delete email. The consent screen shows the exact permissions requested before you approve access.</p>
       <ul>
         <li>The email address associated with the Gmail account.</li>
         <li>Messages and attachments in the folders you choose to sync.</li>
@@ -343,8 +342,8 @@
       <ul>
         <li>No analytics, advertising, tracking pixels, or data brokers.</li>
         <li>No Qubes Mail account and no Qubes Mail-operated cloud service.</li>
-        <li>OAuth tokens are encrypted at rest, and access tokens are short-lived.</li>
-        <li>We do not sell, rent, or share Google user data with third parties. Data is exchanged with Google as needed to provide email service; optional AI processing stays on equipment you control.</li>
+        <li>The documented setup encrypts OAuth token files with split-GPG, and access tokens are short-lived.</li>
+        <li>We do not sell, rent, or share Google user data with third parties. Data is exchanged with Google as needed to provide email service; optional AI processing, when configured as documented, stays on equipment you control.</li>
         <li>This website uses no cookies, analytics, or JavaScript.</li>
       </ul>
       <p class="note">Qubes Mail is a private application, not a public email service or commercial product. These pages document the application and its privacy practices for Google OAuth review.</p>

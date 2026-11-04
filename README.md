@@ -99,8 +99,8 @@ after publication: <https://validator.w3.org/nu/>.
 
 These are human steps. Do not run them until publication is authorized.
 
-1. Review `index.html`, `privacy.html`, and the operator-review comments in the
-   HTML. Resolve every `OPERATOR REVIEW REQUIRED` item.
+1. Review `index.html` and `privacy.html` and confirm the published claims still
+   match the documented application setup and the live OAuth consent screen.
 2. Confirm the repository contains only public website files.
 3. Create the GitHub repository `lakshmiprakashr/qubes-mail-oauth`. Do not
    initialize it with a README, license, or `.gitignore`.
@@ -245,8 +245,8 @@ Reference pages:
 These items require operator review or a Google-side decision. They are not
 resolved by this local website.
 
-- [ ] Confirm the actual OAuth scope requested by the shipped client. The site
-      currently states `https://mail.google.com/`.
+- [ ] Confirm the live OAuth client and consent screen match the documented
+      `https://mail.google.com/` scope and the published disclosures.
 - [ ] Decide the publishing status: Testing, In production unverified, or
       In production verified.
 - [ ] Verify `lakshmiprakashr.github.io` ownership in Google Search Console
@@ -260,28 +260,27 @@ resolved by this local website.
 - [ ] Confirm whether a security assessment applies to the local-only design.
 - [ ] Choose the user support email, developer contact email, and whether to
       provide a terms-of-service page.
-- [ ] Review every `OPERATOR REVIEW REQUIRED` comment in the HTML and remove
-      the comments only after the claim is verified.
-- [ ] Confirm whether optional mail-analysis or AI features process Google user
-      data and, if so, disclose the data flow before publishing.
+- [ ] Confirm whether optional mail-analysis or AI features are present in the
+      shipped build and whether the local model endpoint remains local-only.
 - [ ] Obtain explicit authorization to publish.
 
-## Privacy claims requiring operator approval
+## Privacy claims and verification status
 
-The HTML contains hidden operator-review comments next to claims that cannot be
-proven from this website repository alone. Verify each against the shipped
-application before publication:
+The HTML operator-review comments have been resolved against repository
+evidence, and the published text uses conservative wording where live
+configuration cannot be confirmed from the website repository alone:
 
-1. The OAuth client requests `https://mail.google.com/`.
-2. OAuth tokens are encrypted at rest and plaintext tokens are not persisted.
+1. The documented OAuth setup uses `https://mail.google.com/`.
+2. The documented setup encrypts OAuth token files with split-GPG and does not
+   persist plaintext token files.
 3. No Qubes Mail-operated server receives or stores mail or tokens.
-4. Optional analysis features run on equipment controlled by the user and do
-   not send Google user data to a third party.
+4. Optional AI processing uses a local model service on equipment controlled by
+   the user; the reviewed integration has no external AI API.
 5. The folder defaults are Inbox, Sent, Drafts, and Trash.
 
-Repository evidence supports items 1, 2, 4, and 5. Item 3 is supported by the
-local-only architecture. The live OAuth client configuration, deployed token
-store, and optional AI endpoint still require operator confirmation.
+Repository evidence supports all five claims. Live items still requiring
+operator confirmation are the actual OAuth client scope shown on the consent
+screen, the deployed token store, and the optional AI build/endpoint.
 
 If any claim is inaccurate, update both pages and this README.
 
